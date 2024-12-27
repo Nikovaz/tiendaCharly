@@ -1,0 +1,51 @@
+.App {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #fce4ec; /* Fondo rosa sakura */
+    color: #333;
+  }
+  
+  header {
+    background-color: #e91e63; /* Color rosa sakura oscuro */
+    padding: 20px;
+    color: white;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 2em;
+  }
+  
+  .product-section {
+    margin: 20px;
+  }
+  
+  .product-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .product {
+    border: 1px solid #e91e63; /* Borde rosa sakura oscuro */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    text-align: left;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product h2 {
+    font-size: 1.5em;
+    margin: 0 0 10px;
+    color: #e91e63; /* Color rosa sakura oscuro */
+  }
+  
+  .product p {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+  }
+  

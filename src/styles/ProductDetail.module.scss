@@ -1,0 +1,78 @@
+.productDetail {
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .carousel {
+    display: flex;
+    overflow-x: scroll;
+    gap: 10px;
+  }
+  
+  .image {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 5px;
+  }
+  
+  .title {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #e91e63; /* Color rosa sakura oscuro */
+  }
+  
+  .price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #e91e63; /* Color rosa sakura oscuro */
+  }
+  
+  .description {
+    margin: 10px 0;
+    font-size: 1em;
+    color: #333;
+  }
+  
+  .options {
+    display: flex;
+    gap: 20px;
+    margin: 10px 0;
+  }
+  
+  .option {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .option label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .option select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .stock {
+    margin-top: 10px;
+    font-size: 1em;
+    color: #333;
+  }
+  
+  .loading {
+    font-size: 1.5em;
+    color: #e91e63; /* Color rosa sakura oscuro */
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .error {
+    font-size: 1.5em;
+    color: red;
+    text-align: center;
+    margin-top: 50px;
+  }

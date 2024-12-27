@@ -1,0 +1,42 @@
+.product {
+  border: 1px solid #e91e63; /* Borde rosa sakura oscuro */
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  width: 150px; /* Reducir el ancho */
+  text-align: left;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reducir la sombra */
+  transition: transform 0.2s; /* Añadir una transición para el hover */
+}
+
+.product:hover {
+  transform: scale(1.05); /* Aumentar ligeramente el tamaño al hacer hover */
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.product h2 {
+  font-size: 1.2em; /* Reducir el tamaño de la fuente */
+  margin: 5px 0; /* Reducir el margen */
+  color: #e91e63; /* Color rosa sakura oscuro */
+}
+
+.product-price,
+.product-description,
+.product-colors,
+.product-sizes,
+.product-stock {
+  margin: 3px 0; /* Reducir el margen */
+  font-size: 0.9em; /* Reducir el tamaño de la fuente */
+  color: #333;
+}
+
+.product-price {
+  font-weight: bold; /* Hacer el precio en negrita */
+  color: #e91e63; /* Color rosa sakura oscuro */
+}
