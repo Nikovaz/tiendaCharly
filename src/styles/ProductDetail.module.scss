@@ -1,84 +1,120 @@
 .productDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.selectedImageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.selectedImage {
+  max-width: 100%;
+  height: auto;
 }
 
 .carousel {
-  display: flex;
-  overflow-x: scroll;
-  gap: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.imageContainer {
+  padding: 5px;
 }
 
 .image {
-  width: 100%;
-  max-width: 300px;
-  border-radius: 5px;
-  opacity: 0.5; /* Reducir la opacidad de las imágenes no seleccionadas */
-  transition: opacity 0.3s;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 .image.selected {
-  opacity: 1; /* Aumentar la opacidad de la imagen seleccionada */
+  border: 2px solid #000;
+  transform: scale(1.1);
+}
+
+.nextArrow, .prevArrow {
+  font-size: 24px;
+  cursor: pointer;
+  color: #000;
 }
 
 .title {
-  font-size: 1.5em;
-  margin: 10px 0;
-  color: #e91e63; /* Color rosa sakura oscuro */
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
 .price {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #e91e63; /* Color rosa sakura oscuro */
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
 .description {
-  margin: 10px 0;
-  font-size: 1em;
-  color: #333;
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .options {
   display: flex;
-  gap: 20px;
-  margin: 10px 0;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .option {
-  display: flex;
-  flex-direction: column;
-}
-
-.option label {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.option select {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .stock {
-  margin-top: 10px;
-  font-size: 1em;
-  color: #333;
+  font-size: 16px;
+  margin-top: 20px;
 }
 
-.loading {
-  font-size: 1.5em;
-  color: #e91e63; /* Color rosa sakura oscuro */
-  text-align: center;
-  margin-top: 50px;
-}
+@media (min-width: 768px) {
+  .productDetail {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 
-.error {
-  font-size: 1.5em;
-  color: red;
-  text-align: center;
-  margin-top: 50px;
+  .selectedImageContainer {
+    width: 50%;
+  }
+
+  .carousel {
+    width: 50%;
+  }
+
+  .image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .price {
+    font-size: 24px;
+  }
+
+  .description {
+    font-size: 18px;
+  }
+
+  .options {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .option {
+    margin-bottom: 0;
+  }
 }
