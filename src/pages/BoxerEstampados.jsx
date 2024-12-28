@@ -25,6 +25,8 @@ const BoxerEstampados = () => {
       {products.map(product => (
         <Product
           key={product.id}
+          id={product.id}
+          category="boxer_estampados"
           name={product.model}
           price={product.price}
           description={product.description}

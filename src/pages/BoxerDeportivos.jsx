@@ -3,13 +3,13 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Product from '../components/Product';
 
-const BoxerLisos = () => {
+const BoxerDeportivos = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'boxer_lisos'));
+        const querySnapshot = await getDocs(collection(db, 'boxer_deportivo'));
         const products = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setProducts(products);
       } catch (error) {
@@ -26,7 +26,7 @@ const BoxerLisos = () => {
         <Product
           key={product.id}
           id={product.id}
-          category="boxer_lisos"
+          category="boxer_deportivo"
           name={product.model}
           price={product.price}
           description={product.description}
@@ -40,4 +40,4 @@ const BoxerLisos = () => {
   );
 };
 
-export default BoxerLisos;
+export default BoxerDeportivos;

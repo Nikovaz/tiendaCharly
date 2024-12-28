@@ -11,6 +11,7 @@ const Navbar = () => {
       <ul className={styles['navbar-links']}>
         <li><Link to="/boxer-lisos">Boxer Lisos</Link></li>
         <li><Link to="/boxer-estampados">Boxer Estampados</Link></li>
+        <li><Link to="/boxer-deportivos">Boxer Deportivos</Link></li>
         <li><Link to="/medias">Medias</Link></li>
       </ul>
     </nav>

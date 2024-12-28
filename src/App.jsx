@@ -5,7 +5,7 @@ import Header from './components/Header';
 import ProductList from './components/ProductList';
 import BoxerLisos from './pages/BoxerLisos';
 import BoxerEstampados from './pages/BoxerEstampados';
-import Medias from './pages/Medias';
+import BoxerDeportivos from './pages/BoxerDeportivos';
 import ProductDetail from './pages/ProductDetail';
 import './global/App.scss';
 
@@ -19,7 +19,7 @@ const App = () => {
           <Route path="/" element={<ProductList />} />
           <Route path="/boxer-lisos" element={<BoxerLisos />} />
           <Route path="/boxer-estampados" element={<BoxerEstampados />} />
-          <Route path="/medias" element={<Medias />} />
+          <Route path="/boxer-deportivos" element={<BoxerDeportivos />} />
           <Route path="/:category/:id" element={<ProductDetail />} />
         </Routes>
       </div>
