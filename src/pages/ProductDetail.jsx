@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import { useCart } from '../context/CartProvider';
 import Slider from "react-slick";
 import styles from '../styles/ProductDetail.module.scss';
 import "slick-carousel/slick/slick.css";
@@ -15,6 +16,7 @@ const ProductDetail = () => {
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedImage, setSelectedImage] = useState('');
+  const { addItemToCart } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -72,6 +74,19 @@ const ProductDetail = () => {
     setSelectedColor(color);
   };
 
+  const handleAddToCart = () => {
+    const item = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      selectedColor,
+      selectedSize,
+      URLimg: images,
+      quantity: 1,
+    };
+    addItemToCart(item);
+  };
+
   const settings = {
     dots: true,
     infinite: true,
@@ -122,6 +137,7 @@ const ProductDetail = () => {
           </div>
         </div>
         <p className={styles.stock}>Stock: {product.stock}</p>
+        <button onClick={handleAddToCart} className={styles.addToCartButton}>Agregar al Carrito</button>
       </div>
     </div>
   );
