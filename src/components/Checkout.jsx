@@ -6,7 +6,7 @@ import { collection, addDoc, getDocs, query, where, updateDoc, serverTimestamp, 
 import styles from '../styles/Checkout.module.scss';
 
 const Checkout = () => {
-  const { cartItems, removeFromCart, getTotalPrice, clearCart } = useCart();
+  const { cartItems, removeItemFromCart, calculateTotal, clearCart } = useCart();
   const [customerName, setCustomerName] = useState('');
   const [customerLastName, setCustomerLastName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
@@ -17,15 +17,20 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   const handleRemove = (id) => {
-    removeFromCart(id);
+    removeItemFromCart(id);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
+    if (!cartItems.length) {
+      setError('El carrito está vacío');
+      return;
+    }
+
     if (customerEmail !== confirmEmail) {
-      setError('Emails do not match.');
+      setError('Los emails no coinciden');
       return;
     }
 
@@ -36,13 +41,14 @@ const Checkout = () => {
       customerEmail,
       comment,
       items: cartItems,
-      total: getTotalPrice(),
+      total: calculateTotal(),
       date: serverTimestamp(),
     };
 
     try {
       const docRef = await addDoc(collection(db, 'orders'), order);
 
+      // Actualizar el stock de los productos
       for (const item of cartItems) {
         const q = query(collection(db, 'products'), where('id', '==', item.id));
         const querySnapshot = await getDocs(q);
@@ -52,22 +58,61 @@ const Checkout = () => {
         });
       }
 
-      console.log('Orden de pago generada con ID: ', docRef.id);
+      console.log('Orden generada con ID:', docRef.id);
       clearCart();
       navigate('/order-confirmation', { state: { order: { ...order, id: docRef.id } } });
     } catch (error) {
-      console.error('Error al generar la orden de pago: ', error);
-      setError('Error generating order.');
+      console.error('Error al generar la orden:', error);
+      setError('Error al generar la orden');
     }
   };
 
   return (
     <div className={styles.checkoutContainer}>
-      <h1>Checkout</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
+      <div className={styles.orderSummary}>
+        <h2>Resumen de la Orden</h2>
+        {cartItems.map((item, index) => (
+          <div 
+            key={`${item.id}-${index}-${item.selectedColor}-${item.selectedSize}`} 
+            className={styles.cartItem}
+          >
+            <div className={styles.itemDetails}>
+              <img 
+                src={Array.isArray(item.URLimg) ? item.URLimg[0] : item.URLimg} 
+                alt={item.title} 
+                className={styles.itemImage}
+                onError={(e) => {
+                  console.error('Error cargando imagen:', e);
+                  e.target.src = '/imagen-por-defecto.jpg';
+                }}
+              />
+              <div className={styles.itemInfo}>
+                <h3>{item.title}</h3>
+                <p>Color: {item.selectedColor}</p>
+                <p>Talle: {item.selectedSize}</p>
+                <p>Precio: ${item.price}</p>
+                <p>Cantidad: {item.quantity}</p>
+              </div>
+              <button 
+                onClick={() => handleRemove(item.id)}
+                className={styles.removeButton}
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        ))}
+        <div className={styles.total}>
+          <h3>Total: ${calculateTotal().toFixed(2)}</h3>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className={styles.checkoutForm}>
+        <h2>Información de Contacto</h2>
+        {error && <p className={styles.error}>{error}</p>}
+        
         <div className={styles.formGroup}>
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name">Nombre:</label>
           <input
             type="text"
             id="name"
@@ -76,8 +121,9 @@ const Checkout = () => {
             required
           />
         </div>
+
         <div className={styles.formGroup}>
-          <label htmlFor="lastName">Last Name:</label>
+          <label htmlFor="lastName">Apellido:</label>
           <input
             type="text"
             id="lastName"
@@ -86,8 +132,9 @@ const Checkout = () => {
             required
           />
         </div>
+
         <div className={styles.formGroup}>
-          <label htmlFor="phone">Phone Number:</label>
+          <label htmlFor="phone">Teléfono:</label>
           <input
             type="tel"
             id="phone"
@@ -96,6 +143,7 @@ const Checkout = () => {
             required
           />
         </div>
+
         <div className={styles.formGroup}>
           <label htmlFor="email">Email:</label>
           <input
@@ -106,8 +154,9 @@ const Checkout = () => {
             required
           />
         </div>
+
         <div className={styles.formGroup}>
-          <label htmlFor="confirmEmail">Confirm Email:</label>
+          <label htmlFor="confirmEmail">Confirmar Email:</label>
           <input
             type="email"
             id="confirmEmail"
@@ -116,8 +165,9 @@ const Checkout = () => {
             required
           />
         </div>
+
         <div className={styles.formGroup}>
-          <label htmlFor="comment">Comment (max 100 characters):</label>
+          <label htmlFor="comment">Comentarios (máx. 100 caracteres):</label>
           <textarea
             id="comment"
             value={comment}
@@ -125,31 +175,15 @@ const Checkout = () => {
             maxLength="100"
           />
         </div>
-        <div className={styles.formGroup}>
-          <h2>Total: ${getTotalPrice().toFixed(2)}</h2>
-        </div>
-        <div className={styles.formGroup}>
-          <button type="submit">Generate Order</button>
-        </div>
-      </form>
 
-      <h2>Cart Items</h2>
-      <ul>
-        {cartItems.map((item, index) => (
-          <li key={`${item.id}-${index}`} className={styles.cartItem}>
-            <div className={styles.itemDetails}>
-              <img src={item.URLimg[0]} alt={item.title} className={styles.itemImage} />
-              <span className={styles.itemText}>{item.title} - ${item.price} x {item.quantity}</span>
-            </div>
-            <button
-              onClick={() => handleRemove(item.id)}
-              className={styles.deleteButton}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+        <button 
+          type="submit" 
+          className={styles.submitButton}
+          disabled={!cartItems.length}
+        >
+          Confirmar Orden
+        </button>
+      </form>
     </div>
   );
 };
