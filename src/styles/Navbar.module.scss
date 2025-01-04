@@ -3,6 +3,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  position: relative; /* Asegura que el contenido del carrito se posicione correctamente */
+  z-index: 999; /* Asegura que el navbar esté por encima de otros elementos */
 }
 
 .logo {
@@ -17,46 +21,68 @@
 .navLinks {
   display: flex;
   gap: 20px;
+
+  a {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .cartIcon {
   display: flex;
   align-items: center;
   position: relative;
+  cursor: pointer;
 
   img {
     max-height: 30px;
   }
-}
 
-.cartCount {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 5px 10px;
-  font-size: 12px;
+  .cartCount {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .cartContent {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 10px;
+    color: #333; /* Asegura que el texto sea visible */
+  }
 }
 
 /* Media queries para hacer el navbar responsive */
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .navLinks {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
     width: 100%;
     gap: 10px;
   }
 
   .cartIcon {
-    order: -1; /* Mueve el cartIcon al principio */
+    align-self: flex-end;
   }
 }
 
@@ -77,9 +103,4 @@
       font-size: 10px;
     }
   }
-}
-
-/* Eliminar bordes de todos los elementos */
-* {
-  border: none;
 }
