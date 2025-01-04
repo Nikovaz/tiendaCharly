@@ -13,38 +13,26 @@ const Cart = () => {
 
   return (
     <div className={styles.cart}>
-      <h2>Tu Carrito</h2>
+      <h2>Your Cart</h2>
       {cartItems.length === 0 ? (
-        <p>Tu carrito está vacío</p>
+        <p>Your cart is empty</p>
       ) : (
         <div>
-          {cartItems.map((item, index) => (
-            <div key={`${item.id}-${index}-${item.selectedColor}-${item.selectedSize}`} className={styles.cartItem}>
+          {cartItems.map((item) => (
+            <div key={item.id} className={styles.cartItem}>
               <div className={styles.itemDetails}>
-                <img 
-                  src={Array.isArray(item.URLimg) ? item.URLimg[0] : item.URLimg} 
-                  alt={item.title} 
-                  className={styles.itemImage}
-                  onError={(e) => {
-                    e.target.src = '/imagen-por-defecto.jpg';
-                  }}
-                />
+                <img src={item.URLimg[0]} alt={item.title} className={styles.itemImage} />
                 <div className={styles.details}>
                   <h4>{item.title}</h4>
                   <p>Color: {item.selectedColor}</p>
-                  <p>Talle: {item.selectedSize}</p>
-                  <p>Precio: ${item.price}</p>
+                  <p>Size: {item.selectedSize}</p>
+                  <p>Price: ${item.price}</p>
                   <div className={styles.quantityControl}>
-                    <button onClick={() => decrementItem(item.id)}>-</button>
+                    <button onClick={() => decrementItem(item.id, item.selectedColor, item.selectedSize)}>-</button>
                     <span>{item.quantity}</span>
-                    <button onClick={() => incrementItem(item.id)}>+</button>
+                    <button onClick={() => incrementItem(item.id, item.selectedColor, item.selectedSize)}>+</button>
                   </div>
-                  <button 
-                    onClick={() => removeItemFromCart(item.id)} 
-                    className={styles.deleteButton}
-                  >
-                    Eliminar
-                  </button>
+                  <button onClick={() => removeItemFromCart(item.id, item.selectedColor, item.selectedSize)} className={styles.deleteButton}>Remove</button>
                 </div>
               </div>
             </div>
@@ -52,12 +40,7 @@ const Cart = () => {
           <div className={styles.cartTotal}>
             <h3>Total: ${calculateTotal().toFixed(2)}</h3>
           </div>
-          <button 
-            onClick={handleCheckout} 
-            className={styles.checkoutButton}
-          >
-            Proceder al pago
-          </button>
+          <button onClick={handleCheckout}>Checkout</button>
         </div>
       )}
     </div>

@@ -1,52 +1,22 @@
-.orderConfirmationContainer {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1, h2 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .orderSummary, .cartSummary {
-    margin-top: 20px;
-  }
-  
-  .orderSummary ul, .cartSummary ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .orderSummary li, .cartSummary li {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .orderSummary li:last-child, .cartSummary li:last-child {
-    border-bottom: none;
-  }
-  
-  .item {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  .item img {
-    width: 75px;
-    height: 75px;
-    margin-right: 10px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  
-  .item span {
-    font-size: 1em;
-    margin-right: auto;
-  }
+.orderConfirmation {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.orderDetails {
+  margin-top: 20px;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+}
+
+.item {
+  margin-bottom: 10px;
+}

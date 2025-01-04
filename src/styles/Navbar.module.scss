@@ -1,31 +1,85 @@
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #e91e63; /* Color rosa sakura oscuro */
-    padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  img {
+    max-height: 40px;
   }
-  
-  .navbar-logo img {
-    height: 100px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.cartIcon {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  img {
+    max-height: 30px;
   }
-  
-  .navbar-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
+}
+
+.cartCount {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+/* Media queries para hacer el navbar responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    flex-wrap: wrap;
   }
-  
-  .navbar-links li {
-    margin: 0;
+
+  .navLinks {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
   }
-  
-  .navbar-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2em;
+
+  .cartIcon {
+    order: -1; /* Mueve el cartIcon al principio */
   }
-  
-  .navbar-links a:hover {
-    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px;
   }
+
+  .navLinks {
+    a {
+      font-size: 1em;
+    }
+  }
+
+  .cartIcon {
+    .cartCount {
+      padding: 3px 7px;
+      font-size: 10px;
+    }
+  }
+}
+
+/* Eliminar bordes de todos los elementos */
+* {
+  border: none;
+}

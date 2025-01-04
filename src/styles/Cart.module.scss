@@ -1,75 +1,100 @@
-.cart {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.cartContainer {
+  position: relative;
+}
+
+.cartIcon {
+  position: relative;
+  cursor: pointer;
+
+  .cartCount {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
+
+.cartContent {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 300px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 10px;
+  color: #333; /* Asegura que el texto sea visible */
 }
 
 .cartItem {
   display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.itemDetails {
-  display: flex;
   align-items: center;
-}
+  margin-bottom: 10px;
 
-.itemDetails img {
-  width: 75px;
-  height: 75px;
-  margin-right: 10px;
-  object-fit: cover;
-  border-radius: 50%;
-}
+  img {
+    max-width: 50px;
+    margin-right: 10px;
+  }
 
-.details {
-  display: flex;
-  flex-direction: column;
-}
+  h4 {
+    margin: 0;
+    font-size: 1em;
+    color: #333; /* Asegura que el texto sea visible */
+  }
 
-.quantityControl {
-  display: flex;
-  align-items: center;
-}
+  p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #333; /* Asegura que el texto sea visible */
+  }
 
-.quantityControl button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+  .quantityControls {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px; /* Alinea los botones correctamente */
 
-.quantityControl button:hover {
-  background-color: #0056b3;
+    button {
+      padding: 5px;
+      font-size: 0.9em;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+
+    .smallButton {
+      padding: 2.5px; /* La mitad del tamaño de los botones normales */
+      font-size: 0.45em; /* La mitad del tamaño de fuente de los botones normales */
+    }
+  }
 }
 
 .cartTotal {
-  text-align: right;
-  margin-top: 20px;
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #333; /* Asegura que el texto sea visible */
 }
 
-.cartTotal h3 {
-  font-size: 24px;
-}
-
-.deleteButton {
-  background-color: #dc3545;
-  color: #fff;
+.checkoutButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+  font-size: 1em;
+  text-align: center;
+  margin-top: 10px;
 
-.deleteButton:hover {
-  background-color: #c82333;
+  &:hover {
+    background-color: #0056b3;
+  }
 }

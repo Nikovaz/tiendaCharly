@@ -10,6 +10,7 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import OrderConfirmation from './components/OrderConfirmation';
+import Footer from './components/Footer'; // Importar el componente Footer
 import { CartProvider } from './context/CartProvider';
 import './global/App.scss';
 
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order-confirmation" element={<OrderConfirmation />} />
           </Routes>
+          <Footer /> {/* Agregar el componente Footer */}
         </div>
       </Router>
     </CartProvider>

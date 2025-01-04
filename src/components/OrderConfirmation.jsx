@@ -1,32 +1,57 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 import styles from '../styles/OrderConfirmation.module.scss';
 
 const OrderConfirmation = () => {
   const location = useLocation();
-  const order = location.state?.order || {};
+  const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!location.state?.order) {
-      // Handle case where order is not available in location state
-    }
-  }, [location]);
+    const fetchOrder = async () => {
+      const orderId = location.state?.order?.id;
+      if (!orderId) {
+        setError('No se encontró la orden.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const orderRef = doc(db, 'orders', orderId);
+        const orderSnap = await getDoc(orderRef);
+
+        if (orderSnap.exists()) {
+          setOrder(orderSnap.data());
+        } else {
+          setError('No se encontró la orden.');
+        }
+      } catch (err) {
+        setError('Error al obtener la orden.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrder();
+  }, [location.state?.order?.id]);
+
+  if (loading) return <div className={styles.loading}>Cargando...</div>;
+  if (error) return <div className={styles.error}>{error}</div>;
 
   return (
-    <div className={styles.orderConfirmationContainer}>
-      <h1>Order Confirmation</h1>
-      <p>Thank you for your purchase!</p>
-      <div className={styles.orderSummary}>
-        <h2>Order Details</h2>
-        <ul>
-          <li><strong>Order ID:</strong> {order.id}</li>
-          <li><strong>Customer Name:</strong> {order.customerName}</li>
-          <li><strong>Customer Email:</strong> {order.customerEmail}</li>
-          <li><strong>Total:</strong> ${order.total?.toFixed(2)}</li>
-          <li><strong>Date:</strong> {order.date ? new Date(order.date.seconds * 1000).toLocaleString() : 'N/A'}</li>
-        </ul>
-      </div>
-      <div className={styles.cartSummary}>
+    <div className={styles.orderConfirmation}>
+      <h1>Confirmación de Orden</h1>
+      <div className={styles.orderDetails}>
+        <h2>Detalles de la Orden</h2>
+        <p><strong>ID de la Orden:</strong> {location.state?.order?.id}</p>
+        <p><strong>Nombre:</strong> {order.customerName} {order.customerLastName}</p>
+        <p><strong>Teléfono:</strong> {order.customerPhone}</p>
+        <p><strong>Email:</strong> {order.customerEmail}</p>
+        <p><strong>Comentarios:</strong> {order.comment}</p>
         <h2>Items</h2>
         <ul>
           {order.items?.map((item, index) => (

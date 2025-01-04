@@ -12,6 +12,7 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { addItemToCart } = useCart();
 
   useEffect(() => {
@@ -65,8 +66,14 @@ const ProductDetail = () => {
     setSelectedColor(color);
     const colorIndex = product.colors.indexOf(color);
     if (colorIndex !== -1) {
+      setCurrentImageIndex(colorIndex);
       document.getElementById(`slide-${colorIndex + 1}`).checked = true;
     }
+  };
+
+  const handleImageChange = (index) => {
+    setCurrentImageIndex(index);
+    setSelectedColor(product.colors[index]);
   };
 
   const handleAddToCart = () => {
@@ -78,7 +85,7 @@ const ProductDetail = () => {
       price: product.price,
       selectedColor,
       selectedSize,
-      URLimg: product.URLimg,
+      URLimg: product.URLimg[currentImageIndex], // Imagen seleccionada
       quantity: 1
     };
     addItemToCart(item);
@@ -100,7 +107,7 @@ const ProductDetail = () => {
               <li key={index} className={styles.carouselSlide}>
                 <figure>
                   <div>
-                    <img src={img} alt={`${product.title} - ${index}`} />
+                    <img src={img} alt={`${product.title} - ${index}`} onClick={(e) => { e.preventDefault(); handleImageChange(index); }} />
                   </div>
                 </figure>
               </li>
@@ -108,8 +115,10 @@ const ProductDetail = () => {
           </ul>
           <ul className={styles.carouselThumbnails}>
             {product.URLimg.map((img, index) => (
-              <li key={index}>
-                <label htmlFor={`slide-${index + 1}`}><img src={img} alt={`${product.title} - ${index}`} /></label>
+              <li key={index} className={index === currentImageIndex ? styles.selected : ''}>
+                <label htmlFor={`slide-${index + 1}`} onClick={(e) => { e.preventDefault(); handleImageChange(index); }}>
+                  <img src={img} alt={`${product.title} - ${index}`} />
+                </label>
               </li>
             ))}
           </ul>
