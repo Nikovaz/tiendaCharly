@@ -41,7 +41,7 @@ const CartWidget = () => {
               </div>
             ))}
             <div className={styles.totalAmount}>
-              <h3>Total a Pagar: ${totalAmount}</h3>
+              <h3>Total a Pagar o no: ${totalAmount}</h3>
             </div>
             <button onClick={handleCheckout} className={styles.checkoutButton}>Pagar</button>
           </div>

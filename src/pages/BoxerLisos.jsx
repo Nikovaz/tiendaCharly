@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Product from '../components/Product';
+import styles from '../styles/ProductSection.module.scss';
 
 const BoxerLisos = () => {
   const [products, setProducts] = useState([]);
@@ -21,7 +22,7 @@ const BoxerLisos = () => {
   }, []);
 
   return (
-    <div className="product-list">
+    <div className={styles.productList}>
       {products.map(product => (
         <Product
           key={product.id}

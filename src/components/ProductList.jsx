@@ -11,13 +11,16 @@ const ProductList = () => {
       try {
         const estampadosSnapshot = await getDocs(collection(db, 'boxer_estampados'));
         const lisosSnapshot = await getDocs(collection(db, 'boxer_lisos'));
+        const deportivosSnapshot = await getDocs(collection(db, 'boxer_deportivo'));
 
         const estampados = estampadosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), category: 'boxer_estampados' }));
         const lisos = lisosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), category: 'boxer_lisos' }));
+        const deportivos = deportivosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), category: 'boxer_deportivo' }));
 
         const sectionsArray = [
           { title: 'Boxer Estampados', products: estampados },
-          { title: 'Boxer Lisos', products: lisos }
+          { title: 'Boxer Lisos', products: lisos },
+          { title: 'Boxer Deportivos', products: deportivos }
         ];
 
         setSections(sectionsArray);

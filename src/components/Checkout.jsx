@@ -88,20 +88,13 @@ const Checkout = () => {
     <div className={styles.centerWrapper}>
       <div className={styles.content}>
         <nav>
-          <button className={styles.menu}>Menu</button> {/* Cambiado a button para evitar el error de href */}
-          <h1 className={styles.logo}>Tienda</h1>
+          <h1 className={styles.logo}>Cantidad de productos</h1>
           <div className={styles.icons}>
             <i className="fas fa-search"></i>
             <i className="fas fa-shopping-bag"></i><span style={{ marginLeft: '0.3rem' }}>{cartItems.length}</span>
           </div>
         </nav>
-        <div className={styles.topBar}>
-          <i className="fas fa-arrow-left"></i>
-          <span>Continuar comprando</span>
-        </div>
-        <div className={styles.bag}>
-          <p className={styles.bagHead}><span style={{ textTransform: 'uppercase' }}>Tu Carrito</span> - {cartItems.length} {cartItems.length === 1 ? 'artículo' : 'artículos'}</p>
-        </div>
+      
         {cartItems.map((item, index) => (
           <div key={`${item.id}-${index}-${item.selectedColor}-${item.selectedSize}`} className={styles.bagProduct}>
             <div className={styles.image}>

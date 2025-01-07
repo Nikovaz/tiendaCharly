@@ -1,11 +1,12 @@
 import React from 'react';
 import Product from '../components/Product';
+import styles from '../styles/ProductSection.module.scss';
 
 const ProductSection = ({ title, products }) => {
   return (
-    <section className="product-section">
+    <section className={styles.productSection}>
       <h2>{title}</h2>
-      <div className="product-list">
+      <div className={styles.productList}>
         {products.map(product => (
           <Product
             key={product.id}

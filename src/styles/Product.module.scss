@@ -1,9 +1,28 @@
+.productSection {
+  margin: 20px;
+}
+
+.productList {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas por defecto */
+  gap: 20px; /* Espacio entre los productos */
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr; /* Tres columnas en pantallas más grandes */
+  }
+}
+
+.productLink {
+  text-decoration: none;
+  color: inherit;
+}
+
 .product {
   border: 1px solid #e91e63; /* Borde rosa sakura oscuro */
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
-  width: 150px; /* Reducir el ancho */
+  width: 100%; /* Ajustar el ancho para que se adapte al contenedor */
   text-align: left;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reducir la sombra */
@@ -20,7 +39,7 @@
   border-radius: 5px;
 }
 
-.product h2 {
+.product-title {
   font-size: 1.2em; /* Reducir el tamaño de la fuente */
   margin: 5px 0; /* Reducir el margen */
   color: #e91e63; /* Color rosa sakura oscuro */

@@ -1,0 +1,13 @@
+.productSection {
+    margin: 20px;
+  }
+  
+  .productList {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas por defecto */
+    gap: 15px; /* Espacio entre los productos */
+  
+    @media (min-width: 1024px) {
+      grid-template-columns: 1fr 1fr 1fr; /* Tres columnas en pantallas más grandes */
+    }
+  }
