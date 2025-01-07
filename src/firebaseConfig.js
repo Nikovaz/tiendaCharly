@@ -2,8 +2,8 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDhugp9U5MbiIQAcL9DUTHvqYIeU4X_aAA",
-    authDomain: "tienda-980d9.firebaseapp.com",
+  apiKey: "AIzaSyDhugp9U5MbiIQAcL9DUTHvqYIeU4X_aAA",
+  authDomain: "tienda-980d9.firebaseapp.com",
   projectId: "tienda-980d9",
   storageBucket: "tienda-980d9.appspot.com",
   messagingSenderId: "502960439587",

@@ -21,7 +21,12 @@ const Cart = () => {
           {cartItems.map((item) => (
             <div key={item.id} className={styles.cartItem}>
               <div className={styles.itemDetails}>
-                <img src={item.URLimg[0]} alt={item.title} className={styles.itemImage} />
+                <img
+                  src={Array.isArray(item.URLimg) ? item.URLimg[0] : item.URLimg}
+                  alt={item.title}
+                  className={styles.itemImage}
+                  onError={(e) => { e.target.src = '/imagen-por-defecto.jpg'; }}
+                />
                 <div className={styles.details}>
                   <h4>{item.title}</h4>
                   <p>Color: {item.selectedColor}</p>

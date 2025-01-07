@@ -12,7 +12,7 @@ import Checkout from './components/Checkout';
 import OrderConfirmation from './components/OrderConfirmation';
 import Footer from './components/Footer'; // Importar el componente Footer
 import { CartProvider } from './context/CartProvider';
-import './global/App.scss';
+import './global/App.scss'; // Importar los estilos globales
 
 const App = () => {
   return (
