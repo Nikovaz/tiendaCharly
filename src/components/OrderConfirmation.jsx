@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import styles from '../styles/OrderConfirmation.module.scss';
+import { FaCheckCircle } from 'react-icons/fa';
 
 const OrderConfirmation = () => {
   const location = useLocation();
@@ -44,6 +45,9 @@ const OrderConfirmation = () => {
 
   return (
     <div className={styles.orderConfirmation}>
+      <div className={styles.confirmationIcon}>
+        <FaCheckCircle />
+      </div>
       <h1>Confirmación de Orden</h1>
       <div className={styles.orderDetails}>
         <h2>Detalles de la Orden</h2>

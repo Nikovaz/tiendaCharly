@@ -23,7 +23,11 @@ const Navbar = () => {
           {cartItems.length > 0 && (
             <div className={styles.cartCount}>{cartItems.length}</div>
           )}
-          {isCartHovered && <Cart className={styles.cartContent} />}
+          {isCartHovered && (
+            <div className={styles.cartContentWrapper}>
+              <Cart className={styles.cartContent} />
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.navLinks}>
