@@ -14,20 +14,23 @@ const Navbar = () => {
         <Link to="/" className={styles.logo}>
           <img src="/logoCharly.png" alt="Logo Charly" /> {/* Usa la ruta relativa desde la carpeta public */}
         </Link>
-        <div
-          className={styles.cartIcon}
-          onMouseEnter={() => setIsCartHovered(true)}
-          onMouseLeave={() => setIsCartHovered(false)}
-        >
-          <img src="/cart.png" alt="Cart" />
-          {cartItems.length > 0 && (
-            <div className={styles.cartCount}>{cartItems.length}</div>
-          )}
-          {isCartHovered && (
-            <div className={styles.cartContentWrapper}>
-              <Cart className={styles.cartContent} />
-            </div>
-          )}
+        </div>
+        <div className={styles.cartWrapper}>
+          <div
+            className={styles.cartIcon}
+            onMouseEnter={() => setIsCartHovered(true)}
+            onMouseLeave={() => setIsCartHovered(false)}
+          >
+            <img src="/cart.png" alt="Cart" />
+            {cartItems.length > 0 && (
+              <div className={styles.cartCount}>{cartItems.length}</div>
+            )}
+            {isCartHovered && (
+              <div className={styles.cartContentWrapper}>
+                <Cart className={styles.cartContent} />
+              </div>
+            )}
+          
         </div>
       </div>
       <div className={styles.navLinks}>

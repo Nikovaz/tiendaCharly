@@ -40,7 +40,7 @@
 }
 
 .product-title {
-  font-size: 1.2em; /* Reducir el tamaño de la fuente */
+  font-size: 3em; /* Reducir el tamaño de la fuente */
   margin: 5px 0; /* Reducir el margen */
   color: #e91e63; /* Color rosa sakura oscuro */
 }
@@ -48,14 +48,13 @@
 .product-price,
 .product-description,
 .product-colors,
-.product-sizes,
-.product-stock {
+.product-sizes {
   margin: 3px 0; /* Reducir el margen */
-  font-size: 0.9em; /* Reducir el tamaño de la fuente */
+  font-size: 2em; /* Reducir el tamaño de la fuente */
   color: #333;
 }
 
 .product-price {
   font-weight: bold; /* Hacer el precio en negrita */
-  color: #e91e63; /* Color rosa sakura oscuro */
+  color: #080808; /* Color rosa sakura oscuro */
 }

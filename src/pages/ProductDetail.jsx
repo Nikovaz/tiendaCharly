@@ -20,40 +20,39 @@ const ProductDetail = () => {
       try {
         const docRef = doc(db, category, id);
         const docSnap = await getDoc(docRef);
-        
+
         if (docSnap.exists()) {
           const productData = {
             id: docSnap.id,
-            ...docSnap.data()
+            ...docSnap.data(),
           };
-          console.log('Datos del producto:', productData); // Log de depuración
-          
+
           // Convertir URLimg, colors y sizes en arrays
           if (typeof productData.URLimg === 'string') {
-            productData.URLimg = productData.URLimg.split(',').map(url => url.trim());
+            productData.URLimg = productData.URLimg.split(',').map((url) => url.trim());
           }
           if (typeof productData.colors === 'string') {
-            productData.colors = productData.colors.split(',').map(color => color.trim());
+            productData.colors = productData.colors.split(',').map((color) => color.trim());
           }
           if (typeof productData.sizes === 'string') {
-            productData.sizes = productData.sizes.split(',').map(size => size.trim());
+            productData.sizes = productData.sizes.split(',').map((size) => size.trim());
           }
 
+          console.log('Processed product data:', productData); // Verifica el contenido
           setProduct(productData);
-          
+
           if (productData.colors?.length > 0) {
             setSelectedColor(productData.colors[0]);
           }
-          
+
           if (productData.sizes?.length > 0) {
             setSelectedSize(productData.sizes[0]);
           }
         } else {
-          setError("El producto no existe.");
+          setError('El producto no existe.');
         }
       } catch (error) {
-        console.error('Error al obtener el producto:', error); // Log de depuración
-        setError("Error al obtener el producto: " + error.message);
+        setError('Error al obtener el producto: ' + error.message);
       } finally {
         setLoading(false);
       }
@@ -62,31 +61,43 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id, category]);
 
+  const handlePrev = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? product.URLimg.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === product.URLimg.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const handleThumbnailClick = (index) => {
+    setCurrentImageIndex(index);
+  };
+
   const handleColorChange = (color) => {
     setSelectedColor(color);
+
+    // Actualiza el índice de la imagen según el color seleccionado
     const colorIndex = product.colors.indexOf(color);
     if (colorIndex !== -1) {
       setCurrentImageIndex(colorIndex);
-      document.getElementById(`slide-${colorIndex + 1}`).checked = true;
     }
-  };
-
-  const handleImageChange = (index) => {
-    setCurrentImageIndex(index);
-    setSelectedColor(product.colors[index]);
   };
 
   const handleAddToCart = () => {
     if (!product) return;
-    
+
     const item = {
       id: product.id,
       title: product.title,
       price: product.price,
       selectedColor,
       selectedSize,
-      URLimg: product.URLimg[currentImageIndex], // Imagen seleccionada
-      quantity: 1
+      URLimg: product.URLimg[currentImageIndex],
+      quantity: 1,
     };
     addItemToCart(item);
   };
@@ -99,26 +110,30 @@ const ProductDetail = () => {
     <div className={styles.productDetail}>
       {product.URLimg && (
         <div className={styles.carousel}>
-          {product.URLimg.map((img, index) => (
-            <input key={index} type="radio" name="slides" id={`slide-${index + 1}`} defaultChecked={index === 0} />
-          ))}
-          <ul className={styles.carouselSlides}>
+          <button className={`${styles.carouselButton} ${styles.prev}`} onClick={handlePrev}>
+            &#8249;
+          </button>
+          <div
+            className={styles.carouselSlides}
+            style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
+          >
             {product.URLimg.map((img, index) => (
-              <li key={index} className={styles.carouselSlide}>
-                <figure>
-                  <div>
-                    <img src={img} alt={`${product.title} - ${index}`} onClick={(e) => { e.preventDefault(); handleImageChange(index); }} />
-                  </div>
-                </figure>
-              </li>
+              <div key={index} className={styles.carouselSlide}>
+                <img src={img} alt={`${product.title} - ${index}`} />
+              </div>
             ))}
-          </ul>
+          </div>
+          <button className={`${styles.carouselButton} ${styles.next}`} onClick={handleNext}>
+            &#8250;
+          </button>
           <ul className={styles.carouselThumbnails}>
             {product.URLimg.map((img, index) => (
-              <li key={index} className={index === currentImageIndex ? styles.selected : ''}>
-                <label htmlFor={`slide-${index + 1}`} onClick={(e) => { e.preventDefault(); handleImageChange(index); }}>
-                  <img src={img} alt={`${product.title} - ${index}`} />
-                </label>
+              <li
+                key={index}
+                className={index === currentImageIndex ? styles.selected : ''}
+                onClick={() => handleThumbnailClick(index)}
+              >
+                <img src={img} alt={`${product.title} - Thumbnail ${index}`} />
               </li>
             ))}
           </ul>
@@ -128,41 +143,42 @@ const ProductDetail = () => {
         <h2>{product.title}</h2>
         <p>{product.description}</p>
         <p className={styles.price}>Precio: ${product.price}</p>
-        
+
         {Array.isArray(product.colors) && product.colors.length > 0 && (
           <div className={styles.selectGroup}>
             <label htmlFor="color">Color:</label>
-            <select 
-              id="color" 
-              value={selectedColor} 
+            <select
+              id="color"
+              value={selectedColor}
               onChange={(e) => handleColorChange(e.target.value)}
             >
               {product.colors.map((color) => (
-                <option key={color} value={color}>{color}</option>
+                <option key={color} value={color}>
+                  {color}
+                </option>
               ))}
             </select>
           </div>
         )}
-        
+
         {Array.isArray(product.sizes) && product.sizes.length > 0 && (
           <div className={styles.selectGroup}>
             <label htmlFor="size">Tamaño:</label>
-            <select 
-              id="size" 
-              value={selectedSize} 
+            <select
+              id="size"
+              value={selectedSize}
               onChange={(e) => setSelectedSize(e.target.value)}
             >
               {product.sizes.map((size) => (
-                <option key={size} value={size}>{size}</option>
+                <option key={size} value={size}>
+                  {size}
+                </option>
               ))}
             </select>
           </div>
         )}
-        
-        <button 
-          className={styles.addToCartButton}
-          onClick={handleAddToCart}
-        >
+
+        <button className={styles.addToCartButton} onClick={handleAddToCart}>
           Agregar al Carrito
         </button>
       </div>

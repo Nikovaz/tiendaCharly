@@ -1,14 +1,14 @@
 @mixin aspect-ratio($width, $height) {
   position: relative;
-    
+
   &:before {
     display: block;
     content: "";
     width: 100%;
     padding-top: ($height / $width) * 100%;
   }
-    
-  > img {
+
+   img {
     position: absolute;
     top: 0;
     left: 0;
@@ -16,7 +16,7 @@
     bottom: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain; // Cambiado de cover a contain para menos zoom
+    object-fit: contain;
   }
 }
 
@@ -28,174 +28,106 @@
 }
 
 .carousel {
-  display: block;
-  text-align: left;
   position: relative;
-  margin-bottom: 22px;
   width: 100%;
   max-width: 600px;
-  
-  > input {
-    clip: rect(1px, 1px, 1px, 1px);
-    clip-path: inset(40%);
-    height: 1px;
-    width: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    
-    &:nth-of-type(10):checked ~ .carouselSlides .carouselSlide:first-of-type { margin-left: -900%; }
-    &:nth-of-type(9):checked ~ .carouselSlides .carouselSlide:first-of-type { margin-left: -800%; }
-    &:nth-of-type(8):checked ~ .carouselSlides .carouselSlide:first-of-type { margin-left: -700%; }
-    &:nth-of-type(7):checked ~ .carouselSlides .carouselSlide:first-of-type { margin-left: -600%; }
-    &:nth-of-type(6):checked ~ .carouselSlides .carouselSlide:first-of-type { margin-left: -500%; }
-    &:nth-of-type(5):checked ~ .carouselSlides .carouselSlide:first-of-type { margin-left: -400%; }
-    &:nth-of-type(4):checked ~ .carouselSlides .carouselSlide:first-of-type { margin-left: -300%; }
-    &:nth-of-type(3):checked ~ .carouselSlides .carouselSlide:first-of-type { margin-left: -200%; }
-    &:nth-of-type(2):checked ~ .carouselSlides .carouselSlide:first-of-type { margin-left: -100%; }
-    &:nth-of-type(1):checked ~ .carouselSlides .carouselSlide:first-of-type { margin-left: 0%; }
-    
-    &:nth-of-type(1):checked ~ .carouselThumbnails li:nth-of-type(1) { box-shadow: 0px 0px 0px 5px rgba(0,0,255,0.5); }
-    &:nth-of-type(2):checked ~ .carouselThumbnails li:nth-of-type(2) { box-shadow: 0px 0px 0px 5px rgba(0,0,255,0.5); }
-    &:nth-of-type(3):checked ~ .carouselThumbnails li:nth-of-type(3) { box-shadow: 0px 0px 0px 5px rgba(0,0,255,0.5); }
-    &:nth-of-type(4):checked ~ .carouselThumbnails li:nth-of-type(4) { box-shadow: 0px 0px 0px 5px rgba(0,0,255,0.5); }
-    &:nth-of-type(5):checked ~ .carouselThumbnails li:nth-of-type(5) { box-shadow: 0px 0px 0px 5px rgba(0,0,255,0.5); }
-    &:nth-of-type(6):checked ~ .carouselThumbnails li:nth-of-type(6) { box-shadow: 0px 0px 0px 5px rgba(0,0,255,0.5); }
-    &:nth-of-type(7):checked ~ .carouselThumbnails li:nth-of-type(7) { box-shadow: 0px 0px 0px 5px rgba(0,0,255,0.5); }
-    &:nth-of-type(8):checked ~ .carouselThumbnails li:nth-of-type(8) { box-shadow: 0px 0px 0px 5px rgba(0,0,255,0.5); }
-    &:nth-of-type(9):checked ~ .carouselThumbnails li:nth-of-type(9) { box-shadow: 0px 0px 0px 5px rgba(0,0,255,0.5); }
-    &:nth-of-type(10):checked ~ .carouselThumbnails li:nth-of-type(10) { box-shadow: 0px 0px 0px 5px rgba(0,0,255,0.5); }
-  }
-}
+  margin-bottom: 22px;
 
-.carouselSlides {
-  position: relative;
-  z-index: 1;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  box-sizing: border-box;
-  display: flex;
-}
-
-.carouselSlide {
-  position: relative;
-  display: block;
-  flex: 1 0 100%;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  transition: all 300ms ease-out;
-  box-sizing: border-box;
-  white-space: normal;
-  
-  figure {
+  .carouselSlides {
     display: flex;
-    margin: 0;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.5s ease-in-out; /* Transición suave */
   }
   
-  div {
-    @include aspect-ratio(16, 9); // Ajustar la proporción de la imagen
-    width: 100%;
-  }
+  .carouselSlide {
+    flex: 0 0 100%; /* Cada imagen ocupa el 100% del ancho del carrusel */
+    display: flex;
+    justify-content: center;
   
-  img {
-    display: block;
-    flex: 1 1 auto;
-    object-fit: contain; // Cambiado de cover a contain para menos zoom
-  }
-}
-
-.carouselThumbnails {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  
-  margin: 0 -10px;
-  
-  .carouselSlides + & {
-    margin-top: 20px;
-  }
-  
-  li {        
-    flex: 1 1 auto;
-    max-width: calc((100% / 10) - 20px);  
-    margin: 0 10px;
-    transition: all 300ms ease-in-out;
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
   }
 
-  li.selected {
-    box-shadow: 0px 0px 0px 5px rgba(0, 0, 255, 0.5);
-  }
-  
-  label {
-    display: block;
-    @include aspect-ratio(1,1);
-    
-              
-    &:hover,
-    &:focus {
+  .carouselThumbnails {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+
+    li {
+      list-style: none;
       cursor: pointer;
-      
+      border: 2px solid transparent;
+      transition: border 0.3s, transform 0.2s;
+
+      &.selected {
+        border: 2px solid blue;
+        transform: scale(1.1); /* Efecto de zoom en la miniatura seleccionada */
+      }
+
       img {
-        box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.25);
-        transition: all 300ms ease-in-out;
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 5px; /* Bordes redondeados */
       }
     }
   }
-  
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+
+  .carouselButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1.5em;
+    z-index: 10;
+    border-radius: 50%; /* Botones redondeados */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.prev {
+      left: 10px;
+    }
+
+    &.next {
+      right: 10px;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
   }
 }
 
-.productInfo {
-  text-align: center;
-}
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .carousel {
+    max-width: 100%;
+  }
 
-.price {
-  font-size: 1.5em;
-  color: #333;
-}
+  .carouselThumbnails {
+    gap: 5px;
 
-.selectGroup {
-  margin: 10px 0;
-}
+    li img {
+      width: 40px;
+      height: 40px;
+    }
+  }
 
-.selectGroup label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.selectGroup select {
-  width: 100%;
-  padding: 10px;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.addToCartButton {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px; // Ajustado el padding para que sea más consistente
-  border: none;
-  cursor: pointer;
-  font-size: 1em;
-  display: inline-block; // Asegura que el botón se comporte correctamente
-  text-align: center; // Centra el texto dentro del botón
-  text-decoration: none; // Elimina cualquier subrayado en el texto
-  width: 100%; // Asegura que el botón cubra todo el ancho disponible
-}
-
-.addToCartButton:hover {
-  background-color: #0056b3;
+  .carouselButton {
+    width: 30px;
+    height: 30px;
+    font-size: 1.2em;
+  }
 }
