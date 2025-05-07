@@ -14,7 +14,6 @@ const Navbar = () => {
         <Link to="/" className={styles.logo}>
           <img src="/logoCharly.png" alt="Logo Charly" /> {/* Usa la ruta relativa desde la carpeta public */}
         </Link>
-        </div>
         <div className={styles.cartWrapper}>
           <div
             className={styles.cartIcon}
@@ -30,7 +29,7 @@ const Navbar = () => {
                 <Cart className={styles.cartContent} />
               </div>
             )}
-          
+          </div>
         </div>
       </div>
       <div className={styles.navLinks}>

@@ -1,12 +1,26 @@
+// Estilos globales minimalistas en blanco y negro
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Roboto', Arial, sans-serif;
+  background-color: #ffffff;
+  color: #000000;
+  line-height: 1.6;
+}
+
 .App {
   text-align: center;
-  font-family: Arial, sans-serif;
-  background-color: #fce4ec; /* Fondo rosa sakura */
-  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
-  background-color: #e91e63; /* Color rosa sakura oscuro */
+  background-color: #000000;
   padding: 20px;
   color: white;
 }
@@ -14,37 +28,52 @@ header {
 header h1 {
   margin: 0;
   font-size: 2em;
+  font-weight: 300;
 }
 
-.product-section {
-  margin: 20px;
+a {
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-.product-list {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+a:hover {
+  color: #666666;
 }
 
-.product {
-  border: 1px solid #e91e63; /* Borde rosa sakura oscuro */
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-  width: 200px;
-  text-align: left;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+button {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
-.product h2 {
-  font-size: 1.5em;
-  margin: 0 0 10px;
-  color: #e91e63; /* Color rosa sakura oscuro */
+button:hover {
+  background-color: #333333;
 }
 
-.product p {
-  margin: 0;
-  font-size: 1.2em;
-  color: #333;
+// Contenedor principal que ocupa todo el espacio disponible
+.main-content {
+  flex: 1;
+  padding: 20px;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+// Estilos responsivos
+@media (max-width: 768px) {
+  .main-content {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 10px;
+  }
 }

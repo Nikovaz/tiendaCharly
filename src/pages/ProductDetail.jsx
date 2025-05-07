@@ -18,6 +18,8 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        setLoading(true);
+        setError(null);
         const docRef = doc(db, category, id);
         const docSnap = await getDoc(docRef);
 
@@ -27,32 +29,46 @@ const ProductDetail = () => {
             ...docSnap.data(),
           };
 
-          // Convertir URLimg, colors y sizes en arrays
-          if (typeof productData.URLimg === 'string') {
-            productData.URLimg = productData.URLimg.split(',').map((url) => url.trim());
-          }
-          if (typeof productData.colors === 'string') {
-            productData.colors = productData.colors.split(',').map((color) => color.trim());
-          }
-          if (typeof productData.sizes === 'string') {
-            productData.sizes = productData.sizes.split(',').map((size) => size.trim());
+          // Convertir URLimg, colors y sizes en arrays con verificación de datos
+          if (productData.URLimg) {
+            if (typeof productData.URLimg === 'string') {
+              productData.URLimg = productData.URLimg.split(',').map((url) => url.trim());
+            } else if (!Array.isArray(productData.URLimg)) {
+              productData.URLimg = [productData.URLimg]; // Convierte a array si no es string ni array
+            }
+          } else {
+            productData.URLimg = ['/placeholder-product.jpg']; // Imagen predeterminada si no existe
           }
 
-          console.log('Processed product data:', productData); // Verifica el contenido
+          if (productData.colors) {
+            if (typeof productData.colors === 'string') {
+              productData.colors = productData.colors.split(',').map((color) => color.trim());
+            } else if (!Array.isArray(productData.colors)) {
+              productData.colors = [String(productData.colors)];
+            }
+          } else {
+            productData.colors = ['Único']; // Color predeterminado si no existe
+          }
+
+          if (productData.sizes) {
+            if (typeof productData.sizes === 'string') {
+              productData.sizes = productData.sizes.split(',').map((size) => size.trim());
+            } else if (!Array.isArray(productData.sizes)) {
+              productData.sizes = [String(productData.sizes)];
+            }
+          } else {
+            productData.sizes = ['Único']; // Tamaño predeterminado si no existe
+          }
+
           setProduct(productData);
-
-          if (productData.colors?.length > 0) {
-            setSelectedColor(productData.colors[0]);
-          }
-
-          if (productData.sizes?.length > 0) {
-            setSelectedSize(productData.sizes[0]);
-          }
+          setSelectedColor(productData.colors[0]);
+          setSelectedSize(productData.sizes[0]);
         } else {
           setError('El producto no existe.');
         }
       } catch (error) {
-        setError('Error al obtener el producto: ' + error.message);
+        console.error('Error al obtener el producto:', error);
+        setError('Error al obtener el producto. Por favor, intenta de nuevo más tarde.');
       } finally {
         setLoading(false);
       }
@@ -92,14 +108,29 @@ const ProductDetail = () => {
 
     const item = {
       id: product.id,
-      title: product.title,
-      price: product.price,
+      title: product.title || 'Producto',
+      price: product.price || 0,
       selectedColor,
       selectedSize,
-      URLimg: product.URLimg[currentImageIndex],
+      URLimg: product.URLimg[currentImageIndex] || '/placeholder-product.jpg',
       quantity: 1,
     };
     addItemToCart(item);
+    
+    // Notificación visual
+    const notification = document.createElement('div');
+    notification.textContent = '¡Producto agregado al carrito!';
+    notification.className = styles.notification;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.classList.add(styles.show);
+      
+      setTimeout(() => {
+        notification.classList.remove(styles.show);
+        setTimeout(() => document.body.removeChild(notification), 300);
+      }, 2000);
+    }, 10);
   };
 
   if (loading) return <div className={styles.loading}>Cargando...</div>;
@@ -108,35 +139,49 @@ const ProductDetail = () => {
 
   return (
     <div className={styles.productDetail}>
-      {product.URLimg && (
+      {product.URLimg && product.URLimg.length > 0 && (
         <div className={styles.carousel}>
-          <button className={`${styles.carouselButton} ${styles.prev}`} onClick={handlePrev}>
-            &#8249;
-          </button>
+          {product.URLimg.length > 1 && (
+            <button className={`${styles.carouselButton} ${styles.prev}`} onClick={handlePrev}>
+              &#8249;
+            </button>
+          )}
           <div
             className={styles.carouselSlides}
             style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
           >
             {product.URLimg.map((img, index) => (
               <div key={index} className={styles.carouselSlide}>
-                <img src={img} alt={`${product.title} - ${index}`} />
+                <img 
+                  src={img} 
+                  alt={`${product.title || 'Producto'} - ${index}`} 
+                  onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
+                />
               </div>
             ))}
           </div>
-          <button className={`${styles.carouselButton} ${styles.next}`} onClick={handleNext}>
-            &#8250;
-          </button>
-          <ul className={styles.carouselThumbnails}>
-            {product.URLimg.map((img, index) => (
-              <li
-                key={index}
-                className={index === currentImageIndex ? styles.selected : ''}
-                onClick={() => handleThumbnailClick(index)}
-              >
-                <img src={img} alt={`${product.title} - Thumbnail ${index}`} />
-              </li>
-            ))}
-          </ul>
+          {product.URLimg.length > 1 && (
+            <button className={`${styles.carouselButton} ${styles.next}`} onClick={handleNext}>
+              &#8250;
+            </button>
+          )}
+          {product.URLimg.length > 1 && (
+            <ul className={styles.carouselThumbnails}>
+              {product.URLimg.map((img, index) => (
+                <li
+                  key={index}
+                  className={index === currentImageIndex ? styles.selected : ''}
+                  onClick={() => handleThumbnailClick(index)}
+                >
+                  <img 
+                    src={img} 
+                    alt={`${product.title || 'Producto'} - Thumbnail ${index}`} 
+                    onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
       <div className={styles.productInfo}>
